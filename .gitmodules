@@ -1,0 +1,12 @@
+[submodule "vendor/coffee-mode"]
+	path = vendor/coffee-mode
+	url = git://github.com/defunkt/coffee-mode.git
+[submodule "vendor/color-theme-github"]
+	path = vendor/color-theme-github
+	url = git://github.com/dudleyf/color-theme-github.git
+[submodule "vendor/markdown-mode"]
+	path = vendor/markdown-mode
+	url = git://github.com/defunkt/markdown-mode.git
+[submodule "vendor/twilight-emacs"]
+	path = vendor/twilight-emacs
+	url = git://github.com/crafterm/twilight-emacs.git
