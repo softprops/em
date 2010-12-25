@@ -2,6 +2,16 @@
 
 (defvar *emacs-load-start* (current-time))
 
+; no menus
+(menu-bar-mode -1)
+
+; no tool bars
+(tool-bar-mode -1)
+
+; no splashing
+; put this in .emacs file
+(setq inhibit-splash-screen t)
+
 (add-to-list 'load-path "~/.emacs.d")
 
 ; no #foo#
