@@ -10,7 +10,7 @@
 
 ; no splashing
 ; put this in .emacs file
-(setq inhibit-splash-screen t)
+;(setq inhibit-splash-screen t)
 
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -24,6 +24,7 @@
 (setq standard-indent 2)
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
+(load "~/.emacs.d/vendor/indent.el")
 
 ; char-encoding
 (prefer-coding-system 'utf-8)
