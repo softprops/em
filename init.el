@@ -32,6 +32,9 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+; introduced post-Emacs 21.3
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 ; whitespace
 ;(global-whitespace-mode t)
