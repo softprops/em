@@ -35,6 +35,7 @@
 (set-keyboard-coding-system 'utf-8)
 ; introduced post-Emacs 21.3
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(setq default-buffer-file-coding-system 'utf-8)
 
 ; whitespace
 ;(global-whitespace-mode t)
@@ -59,9 +60,9 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 ; js*
-; possible replacement ~> http://code.google.com/p/js2-mode/
-(autoload 'js-mode "js" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
+(add-to-list 'load-path "~/emacs.d/vendor/js2.el")
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 ; coffee-script
