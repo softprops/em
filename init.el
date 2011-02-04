@@ -62,6 +62,7 @@
 ; js*
 (add-to-list 'load-path "~/emacs.d/vendor/js2.el")
 (autoload 'js2-mode "js2" nil t)
+(setq js2-bounce-indent-p t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
@@ -144,7 +145,13 @@
           (dabbrev-expand nil)
         (indent-for-tab-command)))))
 
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
 ; tell all via https://github.com/stevej/emacs/blob/master/init.el#L53-55
 (message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
                              (- (+ hi lo) (+ (first *emacs-load-start*) (second
                              *emacs-load-start*)))))
+
