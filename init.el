@@ -56,30 +56,38 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(setq auto-mode-alist (append
+  '(("\\.markdown$" . markdown-mode))
+  '(("\\.md$" . markdown-mode))
+   auto-mode-alist))
 
 ; js*
 (add-to-list 'load-path "~/emacs.d/vendor/js2.el")
 (autoload 'js2-mode "js2" nil t)
 (setq js2-bounce-indent-p t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(setq auto-mode-alist (append
+  '(("\\.js$" . js2-mode))
+  '(("\\.json$" . js2-mode))
+  auto-mode-alist))
 
 ; coffee-script
 ; see https://github.com/defunkt/coffee-mode for more fixins
 (add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
 (require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(setq auto-mode-alist (append
+  '(("\\.coffee$" . coffee-mode))
+  '(("Cakefile" . coffee-mode))
+  auto-mode-alist))
 
 ; ruby
 (autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(setq auto-mode-alist (cons '("Rakefile" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("Capfile" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.rake" . ruby-mode) auto-mode-alist))
+(setq auto-mode-alist (append
+  '(("\\.rb$" . ruby-mode))
+  '(("Rakefile" . ruby-mode))
+  '(("Capfile" . ruby-mode))
+  '(("\\.rake" . ruby-mode))
+  auto-mode-alist))
 
 ; nxhtml (for fundamental web stuffs)
 (load "~/.emacs.d/vendor/nxhtml/autostart.el")
@@ -154,4 +162,3 @@
 (message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
                              (- (+ hi lo) (+ (first *emacs-load-start*) (second
                              *emacs-load-start*)))))
-
