@@ -2,11 +2,15 @@
 
 (defvar *emacs-load-start* (current-time))
 
+; external executables
+(push "/usr/local/bin" exec-path)
+
 ; no menus
 (menu-bar-mode -1)
 
 ; no tool bars
-(tool-bar-mode -1)
+(if (string-equal system-type "gnu/kfreebsd")
+  (tool-bar-mode -1))
 
 ; no splashing
 ; put this in .emacs file
@@ -153,10 +157,23 @@
           (dabbrev-expand nil)
         (indent-for-tab-command)))))
 
+(global-set-key (kbd "M-{") 'previous-buffer)
+(global-set-key (kbd "M-}") 'next-buffer)
+
+; ack
+(load-file "~/.emacs.d/vendor/full-ack.el")
 (autoload 'ack-same "full-ack" nil t)
 (autoload 'ack "full-ack" nil t)
 (autoload 'ack-find-same-file "full-ack" nil t)
 (autoload 'ack-find-file "full-ack" nil t)
+(global-set-key (kbd "M-F") 'ack)
+
+; no distractions
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
+; scm
+(add-to-list 'load-path "~/.emacs.d/vendor/magit")
+(require 'magit)
 
 ; tell all via https://github.com/stevej/emacs/blob/master/init.el#L53-55
 (message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
