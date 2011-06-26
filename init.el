@@ -5,6 +5,9 @@
 ; external executables
 (push "/usr/local/bin" exec-path)
 
+; no bell
+(setq ring-bell-function 'ignore)
+
 ; no menus
 (menu-bar-mode -1)
 
@@ -49,6 +52,10 @@
 ; scala
 (add-to-list 'load-path "~/.emacs.d/vendor/scala-mode")
 (require `scala-mode-auto)
+(setq auto-mode-alist (append
+  '(("\\.sbt$" . scala-mode))
+  '(("\\.scala$" . scala-mode))
+  auto-mode-alist))
 
 ; SUPER scala!!
 ;; Load the ensime lisp code...
@@ -83,6 +90,26 @@
   '(("Cakefile" . coffee-mode))
   auto-mode-alist))
 
+(defun coffee-custom ()
+  "coffee-mode-hook"
+  ;; CoffeeScript uses two spaces.
+   (set (make-local-variable 'tab-width) 2)
+  ;; *Messages* spam
+   (setq coffee-debug-mode t)
+  ;; Emacs key binding
+;  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+  ;; Riding edge.
+  ;(setq coffee-command "~/dev/coffee"))
+  ;; Compile '.coffee' files on every save
+  ;(add-hook 'after-save-hook
+  ;    '(lambda ()
+  ;       (when (string-match "\.coffee$" (buffer-name))
+  ;        (coffee-compile-file))
+  ; )
+)
+
+(add-hook 'coffee-mode-hook '(lambda () (coffee-custom)))
+
 ; ruby
 (autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
@@ -114,13 +141,19 @@
 (require 'color-theme)
 (color-theme-initialize)
 (setq color-theme-is-global t)
-(load-file "~/.emacs.d/vendor/color-theme-github/color-theme-github.el")
-(color-theme-github)
-;(load-file "~/.emacs.d/vendor/twilight-emacs/color-theme-twilight.el")
-;(color-theme-twilight)
+(add-to-list 'load-path "~/.emacs.d/vendor/emacs-color-theme-solarized")
+(require 'color-theme-solarized)
+;(load-file "~/.emacs.d/vendor/color-theme-github/color-theme-github.el")
+;(color-theme-github)
+
+(setq-default cursor-type 'bar)
+(set-cursor-color "#6DE9FF")
+
+(global-hl-line-mode 1)
+;(set-face-foreground 'hl-line "#000")
+;(set-face-background 'hi-line "#D0FF9E")
 
 ; buffers
-
 (iswitchb-mode 1)
 (setq iswitchb-buffer-ignore '("^ " "*Buffer"))
 (setq iswitchb-buffer-ignore '("^\\*"))
@@ -157,6 +190,7 @@
           (dabbrev-expand nil)
         (indent-for-tab-command)))))
 
+; lefty <-> righty
 (global-set-key (kbd "M-{") 'previous-buffer)
 (global-set-key (kbd "M-}") 'next-buffer)
 
@@ -169,13 +203,60 @@
 (global-set-key (kbd "M-F") 'ack)
 
 ; no distractions
-(set-frame-parameter nil 'fullscreen 'fullboth)
+; (set-frame-parameter nil 'fullscreen 'fullboth)
 
 ; scm
 (add-to-list 'load-path "~/.emacs.d/vendor/magit")
 (require 'magit)
 
+; symbol jump - http://chopmo.blogspot.com/2008/09/quickly-jumping-to-symbols.html
+(defun ido-goto-symbol ()
+  "Will update the imenu index and then use ido to select a
+   symbol to navigate to"
+  (interactive)
+  (imenu--make-index-alist)
+  (let ((name-and-pos '())
+        (symbol-names '()))
+    (flet ((addsymbols (symbol-list)
+                       (when (listp symbol-list)
+                         (dolist (symbol symbol-list)
+                           (let ((name nil) (position nil))
+                             (cond
+                              ((and (listp symbol) (imenu--subalist-p symbol))
+                               (addsymbols symbol))
+
+                              ((listp symbol)
+                               (setq name (car symbol))
+                               (setq position (cdr symbol)))
+
+                              ((stringp symbol)
+                               (setq name symbol)
+                               (setq position (get-text-property 1 'org-imenu-marker symbol))))
+
+                             (unless (or (null position) (null name))
+                               (add-to-list 'symbol-names name)
+                               (add-to-list 'name-and-pos (cons name position))))))))
+      (addsymbols imenu--index-alist))
+    (let* ((selected-symbol (ido-completing-read "Symbol? " symbol-names))
+           (position (cdr (assoc selected-symbol name-and-pos))))
+      (goto-char position))))
+(global-set-key (kbd "M-s") 'ido-goto-symbol)
+
+(defun toggle-fullscreen (&optional f)
+      (interactive)
+      (let ((current-value (frame-parameter nil 'fullscreen)))
+           (set-frame-parameter nil 'fullscreen
+                                (if (equal 'fullboth current-value)
+                                    (if (boundp 'old-fullscreen) old-fullscreen nil)
+                                    (progn (setq old-fullscreen current-value)
+                                           'fullboth)))))
+(global-set-key (kbd "M-!") 'toggle-fullscreen)
+
 ; tell all via https://github.com/stevej/emacs/blob/master/init.el#L53-55
 (message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
                              (- (+ hi lo) (+ (first *emacs-load-start*) (second
                              *emacs-load-start*)))))
+
+;(set-face-attribute 'default nil :height 290)
+
+
