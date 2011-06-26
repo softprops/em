@@ -13,3 +13,6 @@
 [submodule "vendor/magit"]
 	path = vendor/magit
 	url = git://github.com/philjackson/magit.git
+[submodule "vendor/emacs-color-theme-solarized"]
+	path = vendor/emacs-color-theme-solarized
+	url = git://github.com/sellout/emacs-color-theme-solarized.git

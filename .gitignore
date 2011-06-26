@@ -2,3 +2,4 @@
 *~
 .svn
 *.elc
+vendor/nxhtml/tests
