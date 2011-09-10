@@ -5,6 +5,13 @@
 ; external executables
 (push "/usr/local/bin" exec-path)
 
+; no welcome
+(setq inhibit-startup-message t)
+
+; no tool bars
+(if (string-equal system-type "gnu/kfreebsd")
+  (tool-bar-mode -1))
+
 ; no bell
 (setq ring-bell-function 'ignore)
 
@@ -57,12 +64,6 @@
   '(("\\.scala$" . scala-mode))
   auto-mode-alist))
 
-; SUPER scala!!
-;; Load the ensime lisp code...
-(add-to-list 'load-path "~/.emacs.d/vendor/ensime/elisp")
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
 ; markdown
 (add-to-list 'load-path "~/.emacs.d/vendor/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el"
@@ -76,6 +77,9 @@
 (add-to-list 'load-path "~/emacs.d/vendor/js2.el")
 (autoload 'js2-mode "js2" nil t)
 (setq js2-bounce-indent-p t)
+(setq js-enter-indents-newline t)
+(setq js-basic-offset 2)
+(setq js2-auto-indent-flag nil)
 (setq auto-mode-alist (append
   '(("\\.js$" . js2-mode))
   '(("\\.json$" . js2-mode))
@@ -142,16 +146,15 @@
 (color-theme-initialize)
 (setq color-theme-is-global t)
 (add-to-list 'load-path "~/.emacs.d/vendor/emacs-color-theme-solarized")
-(require 'color-theme-solarized)
-;(load-file "~/.emacs.d/vendor/color-theme-github/color-theme-github.el")
-;(color-theme-github)
+(require 'color-theme-solarized)(load-file "~/.emacs.d/vendor/color-theme-github/color-theme-github.el")
+(color-theme-github)
 
 (setq-default cursor-type 'bar)
 (set-cursor-color "#6DE9FF")
 
 (global-hl-line-mode 1)
 ;(set-face-foreground 'hl-line "#000")
-;(set-face-background 'hi-line "#D0FF9E")
+;(set-face-background 'hi-line "#eee")
 
 ; buffers
 (iswitchb-mode 1)
