@@ -64,6 +64,11 @@
   '(("\\.scala$" . scala-mode))
   auto-mode-alist))
 
+; rust
+(add-to-list 'load-path "~/.emacs.d/vendor/rust-mode")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
 ; markdown
 (add-to-list 'load-path "~/.emacs.d/vendor/markdown-mode")
 (autoload 'markdown-mode "markdown-mode.el"
@@ -261,5 +266,3 @@
 ;                             *emacs-load-start*)))))
 
 ;(set-face-attribute 'default nil :height 290)
-
-
