@@ -26,7 +26,7 @@
 ; put this in .emacs file
 ;(setq inhibit-splash-screen t)
 
-(add-to-list 'load-path "~/.emacs.d")
+;(add-to-list 'load-path "~/.emacs.d")
 
 ; no #foo#
 (setq auto-save-default nil)
@@ -209,8 +209,8 @@
 ; (set-frame-parameter nil 'fullscreen 'fullboth)
 
 ; scm
-(add-to-list 'load-path "~/.emacs.d/vendor/magit")
-(require 'magit)
+;(add-to-list 'load-path "~/.emacs.d/vendor/magit")
+;(require 'magit)
 
 ; symbol jump - http://chopmo.blogspot.com/2008/09/quickly-jumping-to-symbols.html
 (defun ido-goto-symbol ()
@@ -256,9 +256,9 @@
 (global-set-key (kbd "M-!") 'toggle-fullscreen)
 
 ; tell all via https://github.com/stevej/emacs/blob/master/init.el#L53-55
-(message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
-                             (- (+ hi lo) (+ (first *emacs-load-start*) (second
-                             *emacs-load-start*)))))
+;(message "Emacs loaded in  %ds" (destructuring-bind (hi lo ms) (current-time)
+;                             (- (+ hi lo) (+ (first *emacs-load-start*) (second
+;                             *emacs-load-start*)))))
 
 ;(set-face-attribute 'default nil :height 290)
 

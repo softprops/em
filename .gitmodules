@@ -10,9 +10,6 @@
 [submodule "vendor/twilight-emacs"]
 	path = vendor/twilight-emacs
 	url = git://github.com/crafterm/twilight-emacs.git
-[submodule "vendor/magit"]
-	path = vendor/magit
-	url = git://github.com/philjackson/magit.git
 [submodule "vendor/emacs-color-theme-solarized"]
 	path = vendor/emacs-color-theme-solarized
 	url = git://github.com/sellout/emacs-color-theme-solarized.git
